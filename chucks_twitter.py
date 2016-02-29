@@ -25,41 +25,49 @@ class ChuckoyTwitter():
 
     def postStatus(self, update):
         if isinstance(update, basestring):
-            status = self._api.PostUpdate(update)
+            status = self._api.PostUpdate(update.encode('utf8'))
             print 'Tweet posted: \"' + status.text + '\"'
 
     def startTweeting(self, mode):
+        print 'Scheduling tweets...'
         if mode == 'mealreminders':
-            update = '@chuckoy, eat breakfast!'
-            time = [8, 30, 0]
+            update = u'@chuckoy, eat breakfast!'
+            time = [0, 30, 0]
             now = datetime.today()
             future = (now + timedelta(days=1)).replace(hour=time[0], minute=time[1], second=time[2])
             secs = self.calculateDelay(future, now)
-            Timer(secs, recurringTweet(update, time)).start()
+            Timer(secs, self.recurringTweet, [update, time]).start()
 
-            update = '@chuckoy, eat lunch!'
-            time = [12, 30, 0]
+            update = u'@chuckoy, eat lunch!'
+            time = [4, 30, 0]
             now = datetime.today()
             future = (now + timedelta(days=1)).replace(hour=time[0], minute=time[1], second=time[2])
             secs = self.calculateDelay(future, now)
-            Timer(secs, recurringTweet(update, time)).start()
+            Timer(secs, self.recurringTweet, [update, time]).start()
 
-            update = '@chuckoy, eat dinner!'
-            time = [18, 30, 0]
+            update = u'@chuckoy, eat dinner!'
+            time = [10, 30, 00]
             now = datetime.today()
             future = (now + timedelta(days=1)).replace(hour=time[0], minute=time[1], second=time[2])
             secs = self.calculateDelay(future, now)
-            Timer(secs, recurringTweet(update, time)).start()
+            Timer(secs, self.recurringTweet, [update, time]).start()
+
+            print '\tMeal tweets have been scheduled!'
+        print 'All requested tweets have been scheduled!'
 
     def recurringTweet(self, update, time):
         self.postStatus(update)
+
+        # recalculate the next day
         now = datetime.today()
-        future = (now + timedelta(days=1)).replace(hour=time.0, minute=time.1, second=time.2)
+        future = (now + timedelta(days=1)).replace(hour=time[0], minute=time[1], second=time[2])
         secs = self.calculateDelay(future, now)
-        t = Timer(secs, recurringTweet(update, time))
+        t = Timer(secs, self.recurringTweet, [update, time])
         t.start()
-        return t
 
     def calculateDelay(self, future, now):
         delta_t = future - now
-        return delta_t.seconds + 1
+        return delta_t.total_seconds()
+
+if __name__ == '__main__':
+    chuckoyTwitter = ChuckoyTwitter()
