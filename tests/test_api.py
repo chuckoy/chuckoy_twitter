@@ -2,9 +2,9 @@ import twitter
 import unittest
 
 from tokens import (CONSUMER_KEY,
-                     CONSUMER_SECRET,
-                     ACCESS_TOKEN_KEY,
-                     ACCESS_TOKEN_SECRET)
+                    CONSUMER_SECRET,
+                    ACCESS_TOKEN_KEY,
+                    ACCESS_TOKEN_SECRET)
 
 
 @unittest.skipIf(not CONSUMER_KEY and not CONSUMER_SECRET, "No tokens provided")
