@@ -21,7 +21,9 @@ class ChuckoyTwitter():
                           access_token_secret=ACCESS_TOKEN_SECRET,
                           cache=None)
         self._api = api
-        self.postStatus("Gising na si yaya!")
+        now = datetime.today()
+        update = u'Gising na si yaya!' + now.isoformat()
+        self.postStatus(update)
         self.startTweeting('mealreminders')
 
     def postStatus(self, update):
