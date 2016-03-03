@@ -35,21 +35,21 @@ class ChuckoyTwitter():
         print 'Scheduling tweets...'
         if mode == 'mealreminders':
             update = u'@chuckoy, eat breakfast!'
-            time = [0, 30, 0]
+            time = [19, 30, 0]
             now = datetime.today()
             future = (now + timedelta(days=1)).replace(hour=time[0], minute=time[1], second=time[2])
             secs = self.calculateDelay(future, now)
             Timer(secs, self.recurringTweet, [update, time]).start()
 
             update = u'@chuckoy, eat lunch!'
-            time = [4, 30, 0]
+            time = [23, 30, 0]
             now = datetime.today()
             future = (now + timedelta(days=1)).replace(hour=time[0], minute=time[1], second=time[2])
             secs = self.calculateDelay(future, now)
             Timer(secs, self.recurringTweet, [update, time]).start()
 
             update = u'@chuckoy, eat dinner!'
-            time = [10, 30, 00]
+            time = [5, 30, 00]
             now = datetime.today()
             future = (now + timedelta(days=1)).replace(hour=time[0], minute=time[1], second=time[2])
             secs = self.calculateDelay(future, now)
